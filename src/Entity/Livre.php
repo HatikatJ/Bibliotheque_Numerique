@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\LivreRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,24 @@ class Livre
 
     #[ORM\Column(length: 255)]
     private ?string $fichier = null;
+
+    #[ORM\ManyToOne(inversedBy: 'livre')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Auteur $auteur = null;
+
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Commentaire::class)]
+    private Collection $commentaire;
+
+    #[ORM\OneToOne(inversedBy: 'livre', cascade: ['persist', 'remove'])]
+    private ?StatusEnregistrement $statusE = null;
+
+    #[ORM\OneToOne(inversedBy: 'livre', cascade: ['persist', 'remove'])]
+    private ?StatusLecture $statusL = null;
+
+    public function __construct()
+    {
+        $this->commentaire = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +140,72 @@ class Livre
     public function setFichier(string $fichier): self
     {
         $this->fichier = $fichier;
+
+        return $this;
+    }
+
+    public function getAuteur(): ?Auteur
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?Auteur $auteur): self
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Commentaire>
+     */
+    public function getCommentaire(): Collection
+    {
+        return $this->commentaire;
+    }
+
+    public function addCommentaire(Commentaire $commentaire): self
+    {
+        if (!$this->commentaire->contains($commentaire)) {
+            $this->commentaire->add($commentaire);
+            $commentaire->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentaire(Commentaire $commentaire): self
+    {
+        if ($this->commentaire->removeElement($commentaire)) {
+            // set the owning side to null (unless already changed)
+            if ($commentaire->getLivre() === $this) {
+                $commentaire->setLivre(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getStatusE(): ?StatusEnregistrement
+    {
+        return $this->statusE;
+    }
+
+    public function setStatusE(?StatusEnregistrement $statusE): self
+    {
+        $this->statusE = $statusE;
+
+        return $this;
+    }
+
+    public function getStatusL(): ?StatusLecture
+    {
+        return $this->statusL;
+    }
+
+    public function setStatusL(?StatusLecture $statusL): self
+    {
+        $this->statusL = $statusL;
 
         return $this;
     }

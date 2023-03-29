@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AuteurRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -28,6 +30,14 @@ class Auteur
 
     #[ORM\Column(length: 255)]
     private ?string $photo_couverture = null;
+
+    #[ORM\OneToMany(mappedBy: 'auteur', targetEntity: Livre::class, orphanRemoval: true)]
+    private Collection $livre;
+
+    public function __construct()
+    {
+        $this->livre = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -90,6 +100,36 @@ class Auteur
     public function setPhotoCouverture(string $photo_couverture): self
     {
         $this->photo_couverture = $photo_couverture;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Livre>
+     */
+    public function getLivre(): Collection
+    {
+        return $this->livre;
+    }
+
+    public function addLivre(Livre $livre): self
+    {
+        if (!$this->livre->contains($livre)) {
+            $this->livre->add($livre);
+            $livre->setAuteur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLivre(Livre $livre): self
+    {
+        if ($this->livre->removeElement($livre)) {
+            // set the owning side to null (unless already changed)
+            if ($livre->getAuteur() === $this) {
+                $livre->setAuteur(null);
+            }
+        }
 
         return $this;
     }
