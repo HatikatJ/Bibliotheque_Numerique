@@ -37,22 +37,36 @@ class Livre
     #[ORM\Column(length: 255)]
     private ?string $fichier = null;
 
-    #[ORM\ManyToOne(inversedBy: 'livre')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?Auteur $auteur = null;
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $auteur = null;
+
+   
 
     #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Commentaire::class)]
     private Collection $commentaire;
 
-    #[ORM\OneToOne(inversedBy: 'livre', cascade: ['persist', 'remove'])]
-    private ?StatusEnregistrement $statusE = null;
+    #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'livrelu')]
+    #[ORM\JoinTable(name: "livre_lecteur")]//ajouté
+    private Collection $utilisateurlecteur;
 
-    #[ORM\OneToOne(inversedBy: 'livre', cascade: ['persist', 'remove'])]
-    private ?StatusLecture $statusL = null;
+    #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: 'livreenregistre')]
+    #[ORM\JoinTable(name: "livre_enregistreur")]//ajouté
+    private Collection $utilisateurenregistreur;
+
+
+
+
 
     public function __construct()
     {
         $this->commentaire = new ArrayCollection();
+        $this->utilisateurlecteur = new ArrayCollection();
+        $this->utilisateurenregistreur = new ArrayCollection();
+    }
+
+    public function __toString(): string//++++
+    {
+        return $this->titre;//.' '.$this->year;
     }
 
     public function getId(): ?int
@@ -144,17 +158,9 @@ class Livre
         return $this;
     }
 
-    public function getAuteur(): ?Auteur
-    {
-        return $this->auteur;
-    }
+  
 
-    public function setAuteur(?Auteur $auteur): self
-    {
-        $this->auteur = $auteur;
-
-        return $this;
-    }
+   
 
     /**
      * @return Collection<int, Commentaire>
@@ -209,4 +215,71 @@ class Livre
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Utilisateur>
+     */
+    public function getUtilisateurlecteur(): Collection
+    {
+        return $this->utilisateurlecteur;
+    }
+
+    public function addUtilisateurlecteur(Utilisateur $utilisateurlecteur): self
+    {
+        if (!$this->utilisateurlecteur->contains($utilisateurlecteur)) {
+            $this->utilisateurlecteur->add($utilisateurlecteur);
+            $utilisateurlecteur->addLivrelu($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateurlecteur(Utilisateur $utilisateurlecteur): self
+    {
+        if ($this->utilisateurlecteur->removeElement($utilisateurlecteur)) {
+            $utilisateurlecteur->removeLivrelu($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Utilisateur>
+     */
+    public function getUtilisateurenregistreur(): Collection
+    {
+        return $this->utilisateurenregistreur;
+    }
+
+    public function addUtilisateurenregistreur(Utilisateur $utilisateurenregistreur): self
+    {
+        if (!$this->utilisateurenregistreur->contains($utilisateurenregistreur)) {
+            $this->utilisateurenregistreur->add($utilisateurenregistreur);
+            $utilisateurenregistreur->addLivreenregistre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUtilisateurenregistreur(Utilisateur $utilisateurenregistreur): self
+    {
+        if ($this->utilisateurenregistreur->removeElement($utilisateurenregistreur)) {
+            $utilisateurenregistreur->removeLivreenregistre($this);
+        }
+
+        return $this;
+    }
+
+    public function getAuteur(): ?string
+    {
+        return $this->auteur;
+    }
+
+    public function setAuteur(?string $auteur): self
+    {
+        $this->auteur = $auteur;
+
+        return $this;
+    }
+
 }

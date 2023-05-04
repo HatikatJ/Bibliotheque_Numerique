@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Avis;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Tools\Pagination\Paginator;//+++++
 
 /**
  * @extends ServiceEntityRepository<Avis>
@@ -16,10 +17,27 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class AvisRepository extends ServiceEntityRepository
 {
+
+    public const PAGINATOR_PER_PAGE = 2;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Avis::class);
     }
+
+
+    //ajouter
+    public function getCommentPaginator(Conference $conference, int $offset): Paginator
+    {
+        $query = $this->createQueryBuilder('a')
+            ->orderBy('c.createdAt', 'DESC')
+            ->setMaxResults(self::PAGINATOR_PER_PAGE)
+            ->setFirstResult($offset)
+            ->getQuery()
+        ;
+        return new Paginator($query);
+    }
+
 
     public function save(Avis $entity, bool $flush = false): void
     {

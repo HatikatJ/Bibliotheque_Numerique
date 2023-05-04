@@ -1,0 +1,51 @@
+<!-- ***** Header Area Start ***** -->
+
+    <div>
+        <header class="header-area header-sticky">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <nav class="main-nav">
+                            <!-- ***** Logo Start ***** -->
+                            <a href="{{ path('app_accueil') }}" class="logo">
+                                <img src="{{ asset('images/logo.png') }}" alt="Logo de mon application">
+                            </a>
+                            <!-- ***** Logo End ***** -->
+                            <!-- ***** Search End ***** -->
+                            <div class="search-input">
+                                <form id="search" action="#">
+                                <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
+                                <i class="fa fa-search"></i>
+                                </form>
+                            </div>
+                            <!-- ***** Search End ***** -->
+                            <!-- ***** Menu Start ***** -->
+                            <ul class="nav">
+                                <li><a href="{{ path('app_accueil') }}" class="active">Accueil</a></li>
+                                <li><a href="{{ path('app_livre') }}">Livres</a></li>
+                                {#<li><a href="{{ path('app_auteur') }}">Auteurs</a></li>{#PAS TRES NECESSAIRE#}
+                                {#<li><a href="{{ path('app_actualités') }}">Actualité</a></li>{#PAS TRES NECESSAIRE#}
+                                <div class="nav-item dropdown">
+                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                        {# <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;"> #}
+                                        <span class="d-none d-lg-inline-flex">John Doe</span>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a href="{{ path('app_tb') }}" class="dropdown-item">Tabeau de bord</a>
+                                        <a href="{{ path('app_parametre') }}" class="dropdown-item">Parametre</a>
+                                        <a href="{{ path('app_login') }}" class="dropdown-item">Deconnexion</a>
+                                    </div>
+                                </div>
+                            </ul>   
+                            <a class='menu-trigger'>
+                                <span>Menu</span>
+                            </a>
+                            <!-- ***** Menu End ***** -->
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </header>
+    </div>
+
+  <!-- ***** Header Area End ***** -->

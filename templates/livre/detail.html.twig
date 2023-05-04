@@ -1,0 +1,147 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="page-content">
+
+				    {# <!-- ***** detail sur le livre Start ***** --> #}
+					<div class="row">
+                    {% for livre in livre %}
+						<div class="col-lg-12">
+							<div class="main-profile ">
+                                <div class="row">
+                                    <div class="col-lg-3">
+                                        <div class="main-button">
+                                            <a href="{{ path('app_livre') }}">Retour</a>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-3">
+										<input type="checkbox" id="statusEnregistrement" name="statusEnregistrement" value="false">
+                                        <label for="statusEnregistrement"><h6>Enregistrer</h6></label>
+									</div>
+                                    <div class="col-lg-3">
+										<input type="checkbox" id="statusLecture" name="statusLecture" value="false">
+                                        <label for="statusLecture"><h6>Lu</h6></label>
+									</div>
+                                    <div class="col-lg-3">
+                                        <div class="main-button">
+                                            <a href="{{ path('app_lecture') }}">Lire</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br>
+								<div class="row">
+									<div class="col-lg-6">
+										<img src={{asset("images/"~livre.getImageCouverture())}} alt="" style="border-radius: 23px;">
+									</div>
+									<div class="col-lg-6 align-self-center">
+										<ul>
+											<li>Titre :  <span>{{livre.getTitre()}}</span></li>
+											<li>Auteur : <span>{{livre.getAuteur()}}</span></li>
+											<li>Genre : <span>{{livre.getGenre()}}</span></li>
+                                            <li>Editeur : <span>{{livre.getEditeur()}}</span></li>
+                                            <li>Date publication : <span>{{livre.getDatePublication() | date("d/m/Y")}}</span></li>
+											{# <li>Nombre page <span>29</span></li>
+                                            <li>Langue <span>29</span></li> #}
+										</ul>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="clips">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="heading-section">
+														<h4><em>Description</em> du livre</h4>
+													</div>
+												</div>
+
+												<div class="col-lg-12 align-self-center">
+													<div class="main-info header-text">
+														<p>{{livre.getDescriptionLivre()}}</p>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+                               
+							</div>
+						</div>
+                    {% endfor %}
+					</div>
+					{# <!-- ***** detail sur le livre End ***** --> #}
+
+
+					{# <!-- ***** Liste commentaire Start ***** --> #}
+					<div class="gaming-library profile-library">
+						<div class="col-lg-12">
+							<div class="heading-section">
+								<h4><em>Commentaire</em> sur ce livre</h4>
+							</div>
+							<div class="item">
+								<ul>
+									<li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
+									<li>
+										<h4>Fortnite</h4>
+										<span>Sandbox</span>
+									</li>
+									<li>
+										<h4>Date Added</h4>
+										<span>22/06/2036</span>
+									</li>
+									<li>
+										<h4>Hours Played</h4>
+										<span>745 H 22 Mins</span>
+									</li>
+									<li>
+										<h4>Currently</h4>
+										<span>Downloaded</span>
+									</li>
+									<li>
+										<div class="main-border-button border-no-active">
+											<a href="#">Donwloaded</a>
+										</div>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					{# <!-- ***** Liste commentaire End ***** --> #}
+
+                    {# <!-- ***** Ajouter un commentaire start ***** --> #}
+                    
+							
+                            <div class="most-popular">
+                                <div class="row">
+                                    <div class="col-lg-12 align-self-center">
+                                        <div class="main-info header-text">
+                                            <h4>Ajouter un commentaire</h4>
+                                            <p>Vous pouvez changer votre mot de passe ici. N'oubliez pas d'enregistrer</p>
+                                            <ul>
+                                                <li>Ancien mot de passe :  <p>You Haven't Gone Live yet. Go Live By</p></li>
+                                                <li>Nouveau mot de passe : <p>You Haven't Gone Live yet. Go Live By</p></li>
+                                            </ul>
+                                            <div class="main-border-button">
+                                                <a href="#">Enregistrer les modications</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+							
+						</div>
+					</div>
+                    {# <!-- ***** Ajouter un commentaire start ***** --> #}
+
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}

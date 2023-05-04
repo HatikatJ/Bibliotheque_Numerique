@@ -1,0 +1,120 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-12">
+				<div
+					class="page-content">
+
+					<!-- ***** section citation Start ***** -->
+					<div class="main-banner">
+						<div class="row">
+							<div class="col-lg-7">
+								<div class="header-text"><br>
+									<p>
+										<h6>
+											<em>
+												" Lire, c'est voir le monde par mille regards, c'est toucher l'autre dans son essentiel secret, c'est la reponse providentielle à ce grand défaut que l'on a tous de n'etre que soi. "
+											</em>
+										</h6>
+									</p>
+									<h5>SERGE JONCOUR</h5>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- ***** section  End ***** -->
+
+					<!-- ***** section livres les plus lus Start ***** -->
+					<div class="most-popular">
+						<div class="row">
+							<div class="col-lg-12">
+								<div class="heading-section">
+									<h4><em>Les plus lus</em>en ce moment</h4>
+								</div>
+								<div class="main-border-button">
+									<a href="{{ path('app_livre') }}">Voir tous les livres</a>
+								</div>
+
+								<div class="row">
+									{% for livre in livres %}
+										{% set nbLecteurs = livre.getUtilisateurLecteur() | length %}
+										<div class="col-lg-3 col-sm-6">
+											<div class="item">
+												<img src={{asset("images/" ~ livre.getImageCouverture())}} alt="">
+												<h4>Lecteurs<br><span>Année pub</span>
+												</h4>
+												<ul>
+													<li>
+														<i class="fa fa-book-open"></i>
+														{{nbLecteurs}}<Lli>
+															<li>
+																<i class="fa fa-calendar"></i>
+																{{livre.getDatePublication() | date("d/m/Y")}}</li>
+														</ul><br><br>
+														<div class="main-button">
+															<a href="{{ path('app_detail', {livre:livre.getId()}) }}">Detail</a>
+														</div>
+													</li>
+												</div>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ***** section livres les plus lus End ***** -->
+
+						<!-- ***** internaute opinion about the site start ***** -->
+						<div class="most-popular">
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="heading-section">
+										<h4><em>Ce que disent</em>nos internautes</h4>
+									</div>
+									<div class="row">
+										{% for avisU in avis %}
+											<div class="col-lg-6 col-sm-6">
+												<div class="item">
+													<div class="box">
+														<div class="detail-box">
+															<p>{{avisU.getAvis()}}
+															</p><br>
+															<h6>{{avisU.getUtilisateur()}}</h6>
+														</div>
+													</div>
+												</div>
+											</div>
+										{% endfor %}
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- ***** internaute opinion about the site End ***** -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+	{% endblock %}
+
+
+	{# {% block title %}Hello AccueilController!{% endblock %}
+	
+	{% block body %}
+	<style>
+	    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+	    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+	</style>
+	
+	<div class="example-wrapper">
+	    <h1>Hello {{ controller_name }}! ✅</h1>
+	
+	    This friendly message is coming from:
+	    <ul>
+	        <li>Your controller at <code><a href="{{ '/srv/app/src/Controller/AccueilController.php'|file_link(0) }}">src/Controller/AccueilController.php</a></code></li>
+	        <li>Your template at <code><a href="{{ '/srv/app/templates/accueil/index.html.twig'|file_link(0) }}">templates/accueil/index.html.twig</a></code></li>
+	    </ul>
+	</div>
+	{% endblock %} #}
