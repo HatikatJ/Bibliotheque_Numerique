@@ -1,42 +1,101 @@
-{% extends 'base.html.twig' %}
+{% block stylesheets %}
+    <style>
+        body {
+            background-color: #1b1b1b;
+            color: #fff;
+        }
 
-{% block title %}Log in!{% endblock %}
+        .form-signin {
+            max-width: 330px;
+            padding: 15px;
+            margin: 0 auto;
+        }
+
+        .form-signin .form-control {
+            position: relative;
+            box-sizing: border-box;
+            height: auto;
+            padding: 10px;
+            font-size: 16px;
+        }
+
+        .form-signin input[type="email"] {
+            margin-bottom: 10px;
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+        }
+
+        .form-signin input[type="password"] {
+            margin-bottom: 10px;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+        }
+
+        .btn-rose {
+            color: #fff;
+            background-color: #f95388;
+            border-color: #f95388;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+
+        .btn-rose:hover {
+            color: #fff;
+            background-color: #f82068;
+            border-color: #f82068;
+        }
+
+        .btn-rose:focus, .btn-rose.focus {
+            color: #fff;
+            background-color: #f82068;
+            border-color: #f82068;
+            box-shadow: 0 0 0 0.2rem rgba(249, 83, 136, 0.5);
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-<form method="post">
-    {% if error %}
-        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-    {% endif %}
 
-    {% if app.user %}
-        <div class="mb-3">
-            You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="page-content">
+
+                    <form method="post" class="form-signin">
+                        {% if error %}
+                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                        {% endif %}
+
+                        {% if app.user %}
+                            <div class="mb-3">
+                                You are logged in as {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Logout</a>
+                            </div>
+                        {% endif %}
+
+                        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                        <label for="inputEmail">Email</label>
+                        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
+                        <label for="inputPassword">Password</label>
+                        <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+
+                        <input type="hidden" name="_csrf_token"
+                            value="{{ csrf_token('authenticate') }}"
+                        >
+
+                        <div class="checkbox mb-3">
+                            <label>
+                                <input type="checkbox" name="_remember_me"> Remember me
+                            </label>
+                        </div>
+
+                        <button class="btn btn-lg btn-rose btn-block" type="submit">
+                            Sign in
+                        </button>
+                    </form>
+
+                </div>
+            </div>
         </div>
-    {% endif %}
+    </div>
 
-    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-    <label for="inputEmail">Email</label>
-    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
-    <label for="inputPassword">Password</label>
-    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
-
-    <input type="hidden" name="_csrf_token"
-           value="{{ csrf_token('authenticate') }}"
-    >
-
-    {#
-        Uncomment this section and add a remember_me option below your firewall to activate remember me functionality.
-        See https://symfony.com/doc/current/security/remember_me.html
-
-        <div class="checkbox mb-3">
-            <label>
-                <input type="checkbox" name="_remember_me"> Remember me
-            </label>
-        </div>
-    #}
-
-    <button class="btn btn-lg btn-primary" type="submit">
-        Sign in
-    </button>
-</form>
 {% endblock %}

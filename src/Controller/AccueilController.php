@@ -5,18 +5,19 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Doctrine\ORM\EntityManagerInterface;//+++++
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;//++++
 use Twig\Environment;//+++++
 use App\Repository\LivreRepository;//+++++
 use App\Entity\Livre;//+++++
 use App\Repository\AvisRepository;//+++++
 use App\Entity\Avis;//+++++
+use Knp\Component\Pager\PaginatorInterface;//+++++
 
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-    public function index(EntityManagerInterface $entitymanager): Response
+    public function index(Request $request, EntityManagerInterface $entitymanager, PaginatorInterface $paginator): Response
     {
                       //LES LIVRES LES PLUS LUS
       $livres = $entitymanager->getRepository(Livre::class)->findAll();
@@ -30,8 +31,17 @@ class AccueilController extends AbstractController
                       //lES AVIS DES INTERNAUTES SUR LE SITE
       $avis = $entitymanager->getRepository(Avis::class)->findAll();
 
+
+      $pagination = $paginator->paginate(
+        $avis,
+        $request->query->get('page', 1),
+        2
+      );
+
+
           
       return $this->render('accueil/index.html.twig', [
+        'paginationAvis' => $pagination,
                       //LES LIVRES LES PLUS LUS
         'livres' => $livres,
                       //lES AVIS DES INTERNAUTES SUR LE SITE
@@ -41,9 +51,32 @@ class AccueilController extends AbstractController
 
 
 
+    // public function livresLesPlusLus(LivreRepository $livreRepository): Response
+    // {
+    //     $livres = $livreRepository->findMostReadBooks();
+        
+    //     return $this->render('livre/livresLesPlusLus.html.twig', [
+    //         'livres' => $livres,
+    //     ]);
+    // }
+
+
+    // public function livresLesPlusLus(LivreRepository $livreRepository): Response
+    // {
+    //     // Appel de la méthode qui retourne les livres les plus lus
+    //     $livres = $livreRepository->findByNombreDeLecteurs();
+
+    //     // Affichage des résultats dans le template twig
+    //     return $this->render('accueil/index.html.twig', [
+    //         'livres' => $livres,
+    //     ]);
+    // }
 
 
 
+
+
+    
     // public function show(Request $request, Environment $twig, LivreRepository $livreRepository, Avis $avis, AvisRepository $avisRepository): Response
     // {
     //                     //livres les plus lus
