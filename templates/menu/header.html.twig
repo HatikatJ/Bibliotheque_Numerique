@@ -13,10 +13,10 @@
                             <!-- ***** Logo End ***** -->
                             <!-- ***** Search End ***** -->
                             <div class="search-input">
-                                <form id="search" action="#">
+                                {# <form id="search" action="#">
                                 <input type="text" placeholder="Type Something" id='searchText' name="searchKeyword" onkeypress="handle" />
                                 <i class="fa fa-search"></i>
-                                </form>
+                                </form> #}
                             </div>
                             <!-- ***** Search End ***** -->
                             <!-- ***** Menu Start ***** -->
@@ -25,21 +25,26 @@
                                 <li><a href="{{ path('app_livre') }}">Livres</a></li>
                                 {#<li><a href="{{ path('app_auteur') }}">Auteurs</a></li>{#PAS TRES NECESSAIRE#}
                                 {#<li><a href="{{ path('app_actualités') }}">Actualité</a></li>{#PAS TRES NECESSAIRE#}
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                        {# <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;"> #}
-                                        <span class="d-none d-lg-inline-flex"> {{ app.user.nom }} </span>
-                                    </a>
-                                    <div class="dropdown-menu">
-                                        <a href="{{ path('app_tb') }}" class="dropdown-item">Tabeau de bord</a>
-                                        <a href="{{ path('app_parametre') }}" class="dropdown-item">Parametre</a>
-                                        <a href="{{ path('app_logout') }}" class="dropdown-item">Deconnexion</a>
+                                {% if app.user is not null %}
+                                    <div class="nav-item dropdown">
+                                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                            {# <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;"> #}
+                                            <span class="d-none d-lg-inline-flex"> {{ app.user.nom }} </span>
+                                        </a>
+                                        <div class="dropdown-menu">
+                                            <a href="{{ path('app_tb') }}" class="dropdown-item">Tableau de bord</a>
+                                            <a href="{{ path('app_parametre') }}" class="dropdown-item">Parametre</a>
+                                            <a href="{{ path('app_logout') }}" class="dropdown-item">Deconnexion</a>
+                                        </div>
                                     </div>
-                                </div>
+                                {% else %}
+                                    {# <i class="fa fa-user"></i> #}
+                                    <li><a href="{{ path('app_login') }}">Connexion</a></li>
+                                {% endif %}
                             </ul>   
-                            <a class='menu-trigger'>
+                            {# <a class='menu-trigger'>
                                 <span>Menu</span>
-                            </a>
+                            </a> #}
                             <!-- ***** Menu End ***** -->
                         </nav>
                     </div>

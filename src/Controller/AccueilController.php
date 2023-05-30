@@ -17,37 +17,64 @@ use Knp\Component\Pager\PaginatorInterface;//+++++
 class AccueilController extends AbstractController
 {
     #[Route('/', name: 'app_accueil')]
-    public function index(Request $request, EntityManagerInterface $entitymanager, PaginatorInterface $paginator): Response
+    public function index(Request $request, EntityManagerInterface $entitymanager, PaginatorInterface $paginator, LivreRepository $livreRepository ): Response
     {
-                      //LES LIVRES LES PLUS LUS
+                        //LES LIVRES LES PLUS LUS
       $livres = $entitymanager->getRepository(Livre::class)->findAll();
-      $taille=count($livres);
-      for ($i = 1; $i < $taille; ++$i) {
-        $elem = $livres[$i];
-        for ($j = $i; $j > 0 && count( $livres[$j-1]->getUtilisateurLecteur()) > count($elem->getUtilisateurLecteur()); $j--)
-          $livres[$j] =  $livres[$j-1];
-        $livres[$j] = $elem;
-      }
+
+      usort($livres, function($l1, $l2){
+        $t1 = count($l1->getUtilisateurLecteur());
+        $t2 = count($l2->getUtilisateurLecteur());
+
+        if($t1 == $t2)return 0;
+        elseif($t1 > $t2)return -1;
+        else return 1;
+      });
+      $livres = array_slice($livres, 0, 4);
+
                       //lES AVIS DES INTERNAUTES SUR LE SITE
       $avis = $entitymanager->getRepository(Avis::class)->findAll();
-
-
       $pagination = $paginator->paginate(
         $avis,
         $request->query->get('page', 1),
         2
       );
 
-
-          
       return $this->render('accueil/index.html.twig', [
-        'paginationAvis' => $pagination,
                       //LES LIVRES LES PLUS LUS
         'livres' => $livres,
                       //lES AVIS DES INTERNAUTES SUR LE SITE
         'avis' => $avis,
+        'paginationAvis' => $pagination,
       ]);
     }
+
+
+
+
+    // #[Route('livre/{livre}', name: 'app_detail_accueil')]
+    // public function livreLesPlusLus(Request $request, Livre $livre, EntityManagerInterface $entityManager): Response
+    // {
+    //   $livre = $livre->getUtilisateurLecteur();
+
+    //   return $this->render('accueil/detail.html.twig', [
+    //         'livre' => $livre,
+    //     ]);
+    // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

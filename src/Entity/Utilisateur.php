@@ -48,12 +48,16 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Avis::class, orphanRemoval: true)]
     private Collection $avis;
 
+    #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Note::class)]
+    private Collection $note;
+
     public function __construct()
     {
         $this->livrelu = new ArrayCollection();
         $this->commentaire = new ArrayCollection();
         $this->livreenregistre = new ArrayCollection();
         $this->avis = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -240,6 +244,36 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($avi->getUtilisateur() === $this) {
                 $avi->setUtilisateur(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->note->contains($note)) {
+            $this->note->add($note);
+            $note->setUtilisateur($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->note->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getUtilisateur() === $this) {
+                $note->setUtilisateur(null);
             }
         }
 

@@ -1,3 +1,20 @@
+{# non connecté et connecté #}
+
+{# afficher le detail du livre concerné #}
+
+{# enregistrer #}
+
+{# lu #}
+
+{# retour : vers la page ou on etait precedemment #}
+
+{# lire : diriger vers la page de lecture #}
+
+{# afficher la liste des commentaire sur le livres concerné en enpilant du plus recent au moin s recent en allant du haut vers le bas au format nom-commentatire #}
+
+{# internaute ajoute un commentaire s'il est connecté        demande de connexion de l'interanute avant ajout commentaire s'il n'est pas connecté #}
+
+
 {% extends 'base.html.twig' %}
 
 {% block body %}
@@ -7,68 +24,95 @@
 			<div class="col-lg-12">
 				<div class="page-content">
 
-					{# <!-- ***** information sur le livre Start ***** --> #}
+					{# <!-- ***** detail sur le livre Start ***** --> #}
 					<div class="row">
 						<div class="col-lg-12">
 							<div class="main-profile ">
+								{% if app.user is not null %}
+									<div class="row">
+										<div class="col-lg-4">
+											<form>
+												<div class="main-border-button">
+													<div style="text-align: center;">
+														{% if lu == false %} 
+															<input type="hidden" name="lu" value="true">
+															<button type="submit" style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 12px 30px; border-radius: 25px; cursor: pointer;">Marquer comme Lu ?</button>
+														 {% else %}
+															<input type="hidden" name="lu" value="false">
+															<button type="submit" style="color: #fff; background-color: #e75e8d; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;">Retirer comme Lu ?</button>
+														{% endif %} 
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="col-lg-4">
+											<form>
+												<div class="main-border-button">
+													<div style="text-align: center;">
+														{% if enr == false %} 
+															<input type="hidden" name="enr" value="true">
+															<button type="submit" style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 12px 30px; border-radius: 25px; cursor: pointer;">Marquer comme Enregistré ?</button>
+														 {% else %}
+															<input type="hidden" name="enr" value="false">
+															<button type="submit" style="color: #fff; background-color: #e75e8d; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;">Retirer comme Enregistré ?</button>
+														{% endif %} 
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="col-lg-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_lecture', {livre:livre.getId}) }}">Lire</a> 
+											</div>
+										</div>
+									</div>
+								{% else %}
+									<div class="row">
+										<div class="col-lg-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_login') }}">Marquer comme enregistré</a>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_login') }}">Marquer comme lu</a>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="main-button">
+												<a href="{{ path('app_login') }}">Lire</a> 
+											</div>
+										</div>
+									</div>
+								{% endif %}	
 
-								<div class="row">
-									<div class="col-lg-3">
-										<div class="main-button">
-											<a href="{{ path('app_livre') }}">Retour</a>
-										</div>
-									</div>
-									<div class="col-lg-3">
-										<input type="checkbox" id="statusEnregistrement" name="statusEnregistrement" value="false">
-										<label for="statusEnregistrement">
-											<h6>Enregistrer</h6>
-										</label>
-									</div>
-									<div class="col-lg-3">
-										<input type="checkbox" id="statusLecture" name="statusLecture" value="true">
-										<label for="statusLecture">
-											<h6>Lu</h6>
-										</label>
-									</div>
-									<div class="col-lg-3">
-										<div class="main-button">
-											<a href="{{ path('app_lecture') }}">Relire</a>
-										</div>
-									</div>
-								</div>
 								<br>
-
 								<div class="row">
 									<div class="col-lg-6">
-										<img src="images/profile.jpg" alt="" style="border-radius: 23px;">
+										<img src={{asset("images/"~livre.getImageCouverture())}} alt="" style="border-radius: 23px;">
 									</div>
 									<div class="col-lg-6 align-self-center">
 										<ul>
 											<li>Titre :
-												<span>zous la cendre le feu de fr gthhygb bgttyuuuijjiookoppplij</span>
+												<span>{{livre.getTitre()}}</span>
 											</li>
 											<li>Auteur :
-												<span>16</span>
+												<span>{{livre.getAuteur()}}</span>
 											</li>
-											<li>Genre
-												<span>None</span>
+											<li>Genre :
+												<span>{{livre.getGenre()}}</span>
 											</li>
-											<li>Editeur
-												<span>None</span>
+											<li>Editeur :
+												<span>{{livre.getEditeur()}}</span>
 											</li>
-											<li>Date publication
-												<span>None</span>
+											<li>Date publication :
+												<span>{{livre.getDatePublication() | date("d/m/Y")}}</span>
 											</li>
-											<li>Nombre page
-												<span>29</span>
-											</li>
-											<li>Langue
-												<span>29</span>
-											</li>
+											{# <li>Nombre page <span>29</span></li>
+											<li>Langue <span>29</span></li> #}
 										</ul>
 									</div>
 								</div>
-
 								<div class="row">
 									<div class="col-lg-12">
 										<div class="clips">
@@ -76,25 +120,21 @@
 												<div class="col-lg-12">
 													<div class="heading-section">
 														<h4>
-															<em>Mes</em>
-															notes</h4>
+															<em>Note</em>
+															sur le livre</h4>
 													</div>
 												</div>
-
-												<div class="col-lg-12">
-													<div class="main-profile ">
-														<div class="most-popular">
-															<div class="row">
-																<div class="col-lg-12 align-self-center">
-																	<div class="main-info header-text">
-																		<p>Vous pouvez changer vos informations ici. N'oubliez pas d'enregistrer</p>
-																		<div class="main-border-button">
-																			<a href="#">Modifier</a>
-																		</div>
-																	</div>
+												<div class="col-lg-12 align-self-center">
+													<div class="main-info header-text">
+														{{ form_start(form1) }}
+																{{ form_row(form1.notes, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
+															<br>
+															<div class="main-border-button">
+																<div style="text-align: center;">
+																	{{ form_row(form1.enregistrer, { 'attr': {'style': 'background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;'} })}}
 																</div>
 															</div>
-														</div>
+														{{ form_end(form1) }}
 													</div>
 												</div>
 											</div>
@@ -105,76 +145,61 @@
 							</div>
 						</div>
 					</div>
-					{# <!-- ***** information sur le livre End ***** --> #}
+					{# <!-- ***** detail sur le livre End ***** --> #}
 
 
-					{# <!-- ***** Mes commentaires sur ce livre Start ***** --> #}
+					{# <!-- ***** Liste commentaire Start ***** --> #}
 					<div class="gaming-library profile-library">
 						<div class="col-lg-12">
 							<div class="heading-section">
 								<h4>
-									<em>Mes</em>commentaires</h4>
-							</div>
-							<div class="item">
-								<ul>
-									<li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
-									<li>
-										<h4>Fortnite</h4>
-										<span>Sandbox</span>
-									</li>
-									<li>
-										<h4>Date Added</h4>
-										<span>22/06/2036</span>
-									</li>
-									<li>
-										<h4>Hours Played</h4>
-										<span>745 H 22 Mins</span>
-									</li>
-									<li>
-										<h4>Currently</h4>
-										<span>Downloaded</span>
-									</li>
-									<li>
-										<div class="main-border-button border-no-active">
-											<a href="#">Donwloaded</a>
-										</div>
-									</li>
-								</ul>
+									<em>Commentaire</em>
+									sur le livre</h4>
 							</div>
 
+							{% for commentU in comments %}
+							<div class="item">
+								<div class="main-info header-text">
+								{% if commentU.getUtilisateur == utilisateur %}
+									<p>{{commentU.getCommentaires()}}
+									<div class="main-border-button">
+										<a href="{{ path('app_supprimer_commentaire', {id: commentU.id}) }}">Supprimer</a>
+									</div>
+								{% else %}
+									<p>{{commentU.getCommentaires()}}
+								{% endif %}
+								</div>
+							</div>
+							{% endfor %}
 						</div>
 					</div>
-					{# <!-- ***** Mes commentaires sur ce livre End ***** --> #}
+					{# <!-- ***** Liste commentaire End ***** --> #}
 
-                    {# <!-- ***** Ajouter un commentaire sur ce livre start ***** --> #}
+					{# <!-- ***** Ajouter un commentaire start ***** --> #}
 					<div class="most-popular">
 						<div class="row">
 							<div class="col-lg-12 align-self-center">
 								<div class="main-info header-text">
+									
 									<h4>Ajouter un commentaire</h4>
-									<p>Vous pouvez changer votre mot de passe ici. N'oubliez pas d'enregistrer</p>
-									<ul>
-										<li>Ancien mot de passe :
-											<p>You Haven't Gone Live yet. Go Live By</p>
-										</li>
-										<li>Nouveau mot de passe :
-											<p>You Haven't Gone Live yet. Go Live By</p>
-										</li>
-									</ul>
+									<br>
+									{{ form_start(form) }}
+										{{ form_row(form.commentaires, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
+									<br>
 									<div class="main-border-button">
-										<a href="#">Enregistrer les modications</a>
+										<div style="text-align: center;">
+											{{ form_row(form.commenter, { 'attr': {'style': 'background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;'} })}}
+										</div>
 									</div>
+									{{ form_end(form) }}
 								</div>
 							</div>
 						</div>
 					</div>
-                    {# <!-- ***** Ajouter un commentaire sur ce livre End ***** --> #}
-
-
+                    {# <!-- ***** Ajouter un commentaire start ***** --> #}
 				</div>
 			</div>
 		</div>
 	</div>
-
 
 {% endblock %}

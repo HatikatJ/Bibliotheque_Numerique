@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Entity\Note;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Livre;//+++++++++++++++++++++
+use App\Entity\Utilisateur;//+++++++
 
 /**
  * @extends ServiceEntityRepository<Note>
@@ -38,6 +40,20 @@ class NoteRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+
+
+    public function findNoteByLivreByUtilisateur(Livre $livre, Utilisateur $utilisateur)
+    {
+        return $this->createQueryBuilder('n')
+            ->andWhere('n.livre = :livreId')
+            ->setParameter('livreId', $livre)
+            ->andWhere('n.utilisateur =:utilisateurId')
+            ->setParameter('utilisateurId', $utilisateur)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+    }
+
 
 //    /**
 //     * @return Note[] Returns an array of Note objects

@@ -98,10 +98,16 @@
                 {{ form_label(registrationForm.password.second, 'Confirm Password') }}
                 {{ form_widget(registrationForm.password.second, { 'attr': {'class': 'form-control'} }) }}
             </div>
-            <div>
+            {# <div>
                {{ form_row(registrationForm.agreeTerms) }}
-            </div><br><br>
+            </div> #}
+            <br><br>
             <button type="submit" class="btn">Register</button>
+            <br><br>
+            <div>
+                <label>Already have an account?</label>
+                <a href="{{ path('app_login') }}">Sign in</a>
+            </div>
         {{ form_end(registrationForm) }}    
     </div>
 {% endblock %}

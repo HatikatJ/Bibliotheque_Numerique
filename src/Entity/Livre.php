@@ -53,6 +53,9 @@ class Livre
     #[ORM\JoinTable(name: "livre_enregistreur")]//ajouté
     private Collection $utilisateurenregistreur;
 
+    #[ORM\OneToMany(mappedBy: 'livre', targetEntity: Note::class)]
+    private Collection $note;
+
 
 
 
@@ -62,6 +65,7 @@ class Livre
         $this->commentaire = new ArrayCollection();
         $this->utilisateurlecteur = new ArrayCollection();
         $this->utilisateurenregistreur = new ArrayCollection();
+        $this->note = new ArrayCollection();
     }
 
     public function __toString(): string//++++
@@ -192,29 +196,29 @@ class Livre
         return $this;
     }
 
-    public function getStatusE(): ?StatusEnregistrement
-    {
-        return $this->statusE;
-    }
+    // public function getStatusE(): ?StatusEnregistrement
+    // {
+    //     return $this->statusE;
+    // }
 
-    public function setStatusE(?StatusEnregistrement $statusE): self
-    {
-        $this->statusE = $statusE;
+    // public function setStatusE(?StatusEnregistrement $statusE): self
+    // {
+    //     $this->statusE = $statusE;
 
-        return $this;
-    }
+    //     return $this;_
+    // }
 
-    public function getStatusL(): ?StatusLecture
-    {
-        return $this->statusL;
-    }
+    // public function getStatusL(): ?StatusLecture
+    // {
+    //     return $this->statusL;
+    // }
 
-    public function setStatusL(?StatusLecture $statusL): self
-    {
-        $this->statusL = $statusL;
+    // public function setStatusL(?StatusLecture $statusL): self
+    // {
+    //     $this->statusL = $statusL;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @return Collection<int, Utilisateur>
@@ -278,6 +282,36 @@ class Livre
     public function setAuteur(?string $auteur): self
     {
         $this->auteur = $auteur;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Note>
+     */
+    public function getNote(): Collection
+    {
+        return $this->note;
+    }
+
+    public function addNote(Note $note): self
+    {
+        if (!$this->note->contains($note)) {
+            $this->note->add($note);
+            $note->setLivre($this);
+        }
+
+        return $this;
+    }
+
+    public function removeNote(Note $note): self
+    {
+        if ($this->note->removeElement($note)) {
+            // set the owning side to null (unless already changed)
+            if ($note->getLivre() === $this) {
+                $note->setLivre(null);
+            }
+        }
 
         return $this;
     }

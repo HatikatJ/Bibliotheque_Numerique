@@ -1,95 +1,72 @@
 {# non connecté et connecté #}
 
-{# mettre sidebar dans un scroll             liste les catgorie de livre           afffiche livres par genre #}
+{# mettre sidebar dans un scroll             liste les catgorie de livre:OK           afffiche livres par genre:OK #}
 
-{# mettre content dans un scroll           clic sur image du livre dirige vers detail de celui-ci             retour vers page /livre avec bouton #}
+{# mettre content dans un scroll           clic sur image du livre dirige vers detail de celui-ci:OK             retour vers page /livre avec bouton:OK #}
+
+{# ajouter une propriete unique qui ne sera pas la cle primaire et qui permettra d'identifier le livre de maniere unique et qui sera afficher dans l'url
+"{{ path('app_detail', {livre:livre.getRgumentUnique()}) }}"  #}
 
 {% extends 'base.html.twig' %}
 
-	{% block body %}
-		<div class="container"> <div class="row">
-			<div class="col-lg-12">
-				<div
-					class="page-content">
+{% block body %}
+	<div class="container"> <div class="row">
+		<div class="col-lg-12">
+			<div class="page-content">
 
-					<!-- ***** liste livres avec genre Start ***** -->
-					<div
-						class="row">
-						<!-- ***** genre ***** -->
-						<div class="col-lg-4 col-sm-4">
-							<div class="top-streamers">
-								<div class="heading-section">
-									<h4>
-										<em>Genre</em>
-									</h4>
-								</div>
-								{# <ul>
-                  <li>
-                    <span>01</span>
-                    <h6><i class="fa fa-check"></i>	FINANCE</h6>
-                    <div class="main-button">
-                      <a href="#">voir</a>
-                    </div>
-                  </li>
-                </ul> #}
-								<ul>
-									{% for genre in genres %}
-										<li>
-											<span>{{ loop.index }}</span>
-											<h6>
-												<i class="fa fa-check"></i>
-												{{ genre }}</h6>
-											<div class="main-button">
-												<a href="{{ path('app_livre_genre', {genre: genre}) }}">voir</a>
-											</div>
-										</li>
-									{% endfor %}
-								</ul>
+				<!-- ***** liste livres avec genre Start ***** -->
+				<div class="row">
+					<!-- ***** genre ***** -->
+					<div class="col-lg-4 col-sm-4">
+						<div class="top-streamers">
+							<div class="heading-section">
+								<h4>
+									<em>Genre</em>
+								</h4>
 							</div>
-						</div>
-
-						<!-- ***** content Start***** -->
-						<div class="col-lg-8 col-sm-8">
-							<divclass="featured-gamesheader-text">
-								{# <div class="most-popular"> #}
-								{# <div class="heading-section">
-                  <h4>
-                    <em>FINANCE</em>
-                  </h4>
-                </div>
-                <div class="row">
-                  <div class="col-lg-4 col-sm-6">
-                    <div class="item">
-                      <a href="{{ path('app_detail', {livre:0}) }}"><img src="images/popular-03.jpg" alt=""></a>
-                    </div>
-                  </div>
-                </div> #}
-								<div class="heading-section"> 
-                {% if genre != "" %}
-                  <h4><em>{{ genre }}</em></h4>
-                {% else %}
-                  <h4><em>{{ genres[0] }}</em></h4>
-                {% endif %}
-                  
-								</div>
-								<div class="row">
-									{% for livre in livres %}
-										<div class="col-lg-4 col-sm-6">
-											<div class="item">
-												<a href="{{ path('app_detail', {livre:livre.getId()}) }}"><img src={{asset("images/" ~ livre.getImageCouverture())}} alt=""></a>
-											</div>
+							{# <ul style="width: 300px; height: 400px; overflow-y: scroll; scrollbar-color: rebeccapurple green; scrollbar-width: thin;"> #}
+							<ul>
+								{% for genre in genres %}
+									<li>
+										<span>{{ loop.index }}</span>
+										<h6>{# <i class="fa fa-check"></i> #}{{ genre }}</h6>
+										<div class="main-button">
+											<a href="{{ path('app_livre_genre', {genre: genre}) }}">voir</a>
 										</div>
-									{% endfor %}
-								</div>
+									</li>
+								{% endfor %}
+							</ul>
+						</div>
+					</div>
+
+					<!-- ***** content Start***** -->
+					<div class="col-lg-8 col-sm-8">
+						{# <div class="featured-gamesheader-text"> #}
+						<div class="most-popular">
+							<div class="heading-section"> 
+								{% if genre != "" %}
+									<h4><em>{{ genre }}</em></h4>
+								{% else %}
+									<h4><em>{{ genres[0] }}</em></h4>
+								{% endif %}
+							</div>
+							<div class="row">
+								{% for livre in livres %}
+									<div class="col-lg-4">
+										<div class="item">
+											<a href="{{ path('app_detail', {livre:livre.getId()}) }}"><img src={{asset("images/" ~ livre.getImageCouverture())}} alt=""></a>
+										</div>
+									</div>
+								{% endfor %}
 							</div>
 						</div>
-						<!-- ***** content End***** -->
-
 					</div>
-					<!-- ***** liste livres avec genre End ***** -->
-
+					<!-- ***** content End***** -->
 				</div>
+				<!-- ***** liste livres avec genre End ***** -->
+
 			</div>
 		</div>
 	</div>
+</div>
 {% endblock %}

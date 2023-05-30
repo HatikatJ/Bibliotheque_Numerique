@@ -26,92 +26,165 @@
 
 					{# <!-- ***** detail sur le livre Start ***** --> #}
 					<div class="row">
-							<div class="col-lg-12">
-								<div class="main-profile ">
+						<div class="col-lg-12">
+							<div class="main-profile ">
+								{% if app.user is not null %}
 									<div class="row">
-										<div class="col-lg-3">
-											<div class="main-button">
-												<a href="{{ path('app_livre') }}">Retour</a>
+										{# {% if lu is defined %}
+											{% if lu == true %}
+												<div class="col-lg-4">
+													<div style="color: #fff; background-color: #e75e8d; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">
+														<a href="{{ path('app_marquer_comme_lu', {livre:livre.getId()}) }}">Retirer comme lu?</a>
+													</div>
+												</div>
+											{% else %}
+												<div class="col-lg-4">
+													<div style="color: #ec6090; background-color: transparent; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">
+														<a href="{{ path('app_retirer_comme_lu', {livre:livre.getId()}) }}"> Marquer comme lu?</a>
+													</div>
+												</div>
+											{% endif %}
+										{% endif %} #}
+										
+										{# {% if lu == true %}
+											<div class="col-lg-4">
+												<div style="color: #fff; background-color: #e75e8d;  border: none; border-radius: 105px; cursor: pointer;">
+													<a href="{{ path('app_detail', {livre:livre.getId()}) }}">Retirer comme lu?</a>
+												</div>
 											</div>
-										</div>
-										<div class="col-lg-3">
-											<input type="checkbox" id="statusEnregistrement" name="statusEnregistrement" value="false">
-											<label for="statusEnregistrement">
-												<h6>Enregistrer</h6>
-											</label>
-										</div>
-										<div class="col-lg-3">
+										{% else %}
+											<div class="col-lg-4">
+												<div style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">
+													<a href="{{ path('app_detail', {livre:livre.getId()}) }}"> Marquer comme lu?</a>
+												</div>
+											</div>
+										{% endif %} #}
+
+										{# <form>
+												<div class="main-border-button">
+													<div style="text-align: center;">
+														{% if lu == false %} 
+															<input type="hidden" name="lu" value="true">
+															<button type="submit" style="background-color: #4CAF10; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Marquer comme Lu ?</button>
+														 {% else %}
+															<input type="hidden" name="lu" value="false">
+															<button type="submit" style="background-color: #4CAF10; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Retirer comme Lu ?</button>
+														{% endif %} 
+													</div>
+												</div>
+											</form> #}
+										<div class="col-lg-4">
 											<form>
 												<div class="main-border-button">
 													<div style="text-align: center;">
-														{% if lu == false %}
+														{% if lu == false %} 
 															<input type="hidden" name="lu" value="true">
-															<button type="submit" style="background-color: #4CAF10; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Marquer comme Lu ?</button>
-														{% else %}
+															<button type="submit" style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 12px 30px; border-radius: 25px; cursor: pointer;">Marquer comme Lu ?</button>
+														 {% else %}
 															<input type="hidden" name="lu" value="false">
-															<button type="submit" style="background-color: #4CAF10; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Retirer comme Lu ?</button>
-														{% endif %}
+															<button type="submit" style="color: #fff; background-color: #e75e8d; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;">Retirer comme Lu ?</button>
+														{% endif %} 
 													</div>
 												</div>
 											</form>
 										</div>
-										<div class="col-lg-3">
-											<div class="main-button">
-												<a href="{{ path('app_lecture', {livre:livre.getId()}) }}">Lire</a> 
+										<div class="col-lg-4">
+											<form>
+												<div class="main-border-button">
+													<div style="text-align: center;">
+														{% if enr == false %} 
+															<input type="hidden" name="enr" value="true">
+															<button type="submit" style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 12px 30px; border-radius: 25px; cursor: pointer;">Marquer comme Enregistré ?</button>
+														 {% else %}
+															<input type="hidden" name="enr" value="false">
+															<button type="submit" style="color: #fff; background-color: #e75e8d; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;">Retirer comme Enregistré ?</button>
+														{% endif %} 
+													</div>
+												</div>
+											</form>
+										</div>
+										<div class="col-lg-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_lecture', {livre:livre.getId}) }}">Lire</a> 
 											</div>
 										</div>
 									</div>
-									<br>
+								{% else %}
 									<div class="row">
-										<div class="col-lg-6">
-											<img src={{asset("images/"~livre.getImageCouverture())}} alt="" style="border-radius: 23px;">
+										{# <div class="col-lg-3">
+											<div class="main-button">
+												<a href="{{ path('app_livre') }}">Retour</a>
+											</div>
+										</div> #}
+										<div class="col-lg-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_login') }}">Marquer comme enregistré</a>
+											</div>
 										</div>
-										<div class="col-lg-6 align-self-center">
-											<ul>
-												<li>Titre :
-													<span>{{livre.getTitre()}}</span>
-												</li>
-												<li>Auteur :
-													<span>{{livre.getAuteur()}}</span>
-												</li>
-												<li>Genre :
-													<span>{{livre.getGenre()}}</span>
-												</li>
-												<li>Editeur :
-													<span>{{livre.getEditeur()}}</span>
-												</li>
-												<li>Date publication :
-													<span>{{livre.getDatePublication() | date("d/m/Y")}}</span>
-												</li>
-												{# <li>Nombre page <span>29</span></li>
-												                                            <li>Langue <span>29</span></li> #}
-											</ul>
+										<div class="col-lg-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_login') }}">Marquer comme lu</a>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="main-button">
+												<a href="{{ path('app_login') }}">Lire</a> 
+											</div>
 										</div>
 									</div>
-									<div class="row">
-										<div class="col-lg-12">
-											<div class="clips">
-												<div class="row">
-													<div class="col-lg-12">
-														<div class="heading-section">
-															<h4>
-																<em>Description</em>
-																du livre</h4>
-														</div>
-													</div>
+								{% endif %}	
 
-													<div class="col-lg-12 align-self-center">
-														<div class="main-info header-text">
-															<p>{{livre.getDescriptionLivre()}}</p>
-														</div>
+								<br>
+								<div class="row">
+									<div class="col-lg-6">
+										<img src={{asset("images/"~livre.getImageCouverture())}} alt="" style="border-radius: 23px;">
+									</div>
+									<div class="col-lg-6 align-self-center">
+										<ul>
+											<li>Titre :
+												<span>{{livre.getTitre()}}</span>
+											</li>
+											<li>Auteur :
+												<span>{{livre.getAuteur()}}</span>
+											</li>
+											<li>Genre :
+												<span>{{livre.getGenre()}}</span>
+											</li>
+											<li>Editeur :
+												<span>{{livre.getEditeur()}}</span>
+											</li>
+											<li>Date publication :
+												<span>{{livre.getDatePublication() | date("d/m/Y")}}</span>
+											</li>
+											{# <li>Nombre page <span>29</span></li>
+											<li>Langue <span>29</span></li> #}
+										</ul>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-lg-12">
+										<div class="clips">
+											<div class="row">
+												<div class="col-lg-12">
+													<div class="heading-section">
+														<h4>
+															<em>Description</em>
+															du livre</h4>
+													</div>
+												</div>
+
+												<div class="col-lg-12 align-self-center">
+													<div class="main-info header-text">
+														<p class="text-white">{{livre.getDescriptionLivre()}}</p>
 													</div>
 												</div>
 											</div>
 										</div>
 									</div>
-
 								</div>
+
 							</div>
+						</div>
 					</div>
 					{# <!-- ***** detail sur le livre End ***** --> #}
 
@@ -122,34 +195,23 @@
 							<div class="heading-section">
 								<h4>
 									<em>Commentaire</em>
-									sur ce livre</h4>
+									sur le livre</h4>
 							</div>
+
+							{% for commentU in comments %}
 							<div class="item">
-								<ul>
-									<li><img src="assets/images/game-02.jpg" alt="" class="templatemo-item"></li>
-									<li>
-										<h4>Fortnite</h4>
-										<span>Sandbox</span>
-									</li>
-									<li>
-										<h4>Date Added</h4>
-										<span>22/06/2036</span>
-									</li>
-									<li>
-										<h4>Hours Played</h4>
-										<span>745 H 22 Mins</span>
-									</li>
-									<li>
-										<h4>Currently</h4>
-										<span>Downloaded</span>
-									</li>
-									<li>
-										<div class="main-border-button border-no-active">
-											<a href="#">documments</a>
-										</div>
-									</li>
-								</ul>
+								<div class="main-info header-text">
+								{% if commentU.getUtilisateur == utilisateur %}
+									<p>{{commentU.getCommentaires()}}
+									<div class="main-border-button">
+										<a href="{{ path('app_supprimer_commentaire', {id: commentU.id}) }}">Supprimer</a>
+									</div>
+								{% else %}
+									<p>{{commentU.getCommentaires()}}
+								{% endif %}
+								</div>
 							</div>
+							{% endfor %}
 						</div>
 					</div>
 					{# <!-- ***** Liste commentaire End ***** --> #}
@@ -159,25 +221,23 @@
 						<div class="row">
 							<div class="col-lg-12 align-self-center">
 								<div class="main-info header-text">
+									
 									<h4>Ajouter un commentaire</h4>
-									<p>Vous pouvez changer votre mot de passe ici. N'oubliez pas d'enregistrer</p>
-									<ul>
-										<li>Ancien mot de passe :
-											<p>You Haven't Gone Live yet. Go Live By</p>
-										</li>
-										<li>Nouveau mot de passe :
-											<p>You Haven't Gone Live yet. Go Live By</p>
-										</li>
-									</ul>
+									<br>
+									{{ form_start(form) }}
+										{{ form_row(form.commentaires, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
+									<br>
 									<div class="main-border-button">
-										<a href="#">Enregistrer les modications</a>
+										<div style="text-align: center;">
+											{{ form_row(form.commenter, { 'attr': {'style': 'background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;'} })}}
+										</div>
 									</div>
+									{{ form_end(form) }}
 								</div>
 							</div>
 						</div>
 					</div>
                     {# <!-- ***** Ajouter un commentaire start ***** --> #}
-
 				</div>
 			</div>
 		</div>

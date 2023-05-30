@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Livre;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query\Expr\Join;
 
 /**
  * @extends ServiceEntityRepository<Livre>
@@ -99,16 +100,48 @@ class LivreRepository extends ServiceEntityRepository
 
 
 // LIVRE LES PLUS LU : app_accueil VIEW
-// public function findMostReadBooks(int $limit = 4): array
+
+public function findMostReadBooks(int $limit = 5)
+{
+    $qb = $this->getEntityManager()->createQueryBuilder();
+    return $qb->select('l, count(ll.livre_id) as nb')
+        ->from('livre', 'l')
+        ->join('l.livre_lecteur', 'll')
+        ->where('ll.livre_id = l.id')
+        ->groupBy('l')
+        ->orderBy('nb', 'DESC')
+        ->getQuery()
+        ->getResult();
+}
+
+
+
+
+
+
+// public function findMostReadBooks(int $limit = 4)
 // {
 //     return $this->createQueryBuilder('livre')
-//         ->select('livre.image_couverture, COUNT(livre_lecteur.livre_id) AS nbLecteurs')
-//         ->join('livre_lecteur', 'livre', 'livre.id=livre_lecteur.livre_id')
-//         ->groupBy('livre.id')
+//         ->select('livre.image_couverture, COUNT(livre_lecteur.livre) AS nbLecteurs')
+//         ->join('utilisateurlecteur', 'livre_Lecteur')
+//         ->groupBy('livre')
 //         ->orderBy('nbLecteurs', 'DESC')
 //         ->setMaxResults($limit)
 //         ->getQuery()
 //         ->getResult();
+// }
+
+
+// public function findNoteByLivreByUtilisateur(Livre $livre, Utilisateur $utilisateur)
+// {
+//     return $this->createQueryBuilder('n')
+//         ->andWhere('n.livre = :livreId')
+//         ->setParameter('livreId', $livre)
+//         ->andWhere('n.utilisateur =:utilisateurId')
+//         ->setParameter('utilisateurId', $utilisateur)
+//         ->getQuery()
+//         ->getOneOrNullResult()
+//     ;
 // }
 
 // public function findByNombreDeLecteurs(int $limit = 4): array

@@ -1,87 +1,125 @@
-{# non connecté et connecté #}
-
-{# ajouter une zone de txtet pour les notes avce scroll#}
-
-{# ajouter un plugging de lecteur pdf(zoom - changement de page - scroll ) #}
 
 
-{% extends 'base.html.twig' %}
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+        <title>Bibliotheque Numerique</title>
+        <!-- Bootstrap core CSS -->
+        <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Additional CSS Files -->
+        <link rel="stylesheet" href="/css/fontawesome.css">
+        <link rel="stylesheet" href="/css/templatemo-cyborg-gaming.css">
+        <link rel="stylesheet" href="/css/owl.css">
+        <link rel="stylesheet" href="/css/animate.css">
+        <link rel="stylesheet"href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <head>
 
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('pdfjs/web/viewer.css') }}">
-    <style>
-        #pdfViewer {
-            position: relative;
-            height: 500px;
-        }
-        #pdfZoomIn, #pdfZoomOut {
-            position: absolute;
-            top: 10px;
-            font-size: 24px;
-            cursor: pointer;
-        }
-        #pdfZoomIn {
-            right: 60px;
-        }
-        #pdfZoomOut {
-            right: 10px;
-        }
-        #pdfPrev, #pdfNext {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            cursor: pointer;
-        }
-        #pdfPrev {
-            left: 10px;
-        }
-        #pdfNext {
-            right: 10px;
-        }
-        #pdfScrollbar {
-            position: absolute;
-            bottom: 10px;
-            left: 0;
-            right: 0;
-            height: 10px;
-            border-radius: 5px;
-            background-color: #ddd;
-            overflow: hidden;
-        }
-        #pdfScrollbarFill {
-            height: 100%;
-            background-color: #333;
-        }
-    </style>
-{% endblock %}
+    <body style="background-color=black">  
+
+
+{# {% extends 'base.html.twig' %} #}
+
+
+	{# {% block stylesheets %} #}
+	{# {{ parent() }} #}
+	{# <link rel="stylesheet" href="{{ asset('pdfjs/web/viewer.css') }}"> <style> 
+		#pdfViewer {
+			position: relative;
+			height: 500px;
+		}
+		#pdfZoomIn,
+		#pdfZoomOut {
+			position: absolute;
+			top: 10px;
+			font-size: 24px;
+			cursor: pointer;
+		}
+		#pdfZoomIn {
+			right: 60px;
+		}
+		#pdfZoomOut {
+			right: 10px;
+		}
+		#pdfPrev,
+		#pdfNext {
+			position: absolute;
+			top: 50%;
+			transform: translateY(-50%);
+			cursor: pointer;
+		}
+		#pdfPrev {
+			left: 10px;
+		}
+		#pdfNext {
+			right: 10px;
+		}
+		#pdfScrollbar {
+			position: absolute;
+			bottom: 10px;
+			left: 0;
+			right: 0;
+			height: 10px;
+			border-radius: 5px;
+			background-color: #ddd;
+			overflow: hidden;
+		}
+		#pdfScrollbarFill {
+			height: 100%;
+			background-color: #333;
+		}
+	</style>
+{% endblock %} #}
 
 
 {% block body %}
-	<div class="container">
+	{# <div class="container"> #}
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="page-content">
+				{# <div class="page-content"> #}
 
-          <!-- ***** Lecture Start ***** -->
+					<!-- ***** Lecture Start ***** -->
 					<div class="row">
 						<!-- ***** prise de note Start ***** -->
 						<div class="col-lg-4">
 							<div class="top-streamers">
-								<div class="heading-section">
-									<h4>
-										<em>Notes</em>
-									</h4>
-								</div>
-                <div class="col-lg-12">
-                  <form action="{{ path('app_enregistrer_notes') }}" method="POST" style="margin: 0 auto; max-width: 800px;">
-                    <textarea name="notes" rows="13" cols="50" style="display: block; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;"></textarea>
-                    <div style="text-align: center;">
-                      <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Enregistrer</button>
-                    </div>
-                  </form>        
-                </div>
+                                <div class="row">
+                                    <div class="col-lg-12">
+                                        <div class="heading-section">
+                                            <h4>
+                                                <em>Notes</em>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                    {# <div class="col-lg-6">
+                                        <div class="main-button">
+                                            <a href="#">Retour</a>
+                                        	<a href="{{ path('app_detail', {livre:livreId.getId()}) }}">Retour</a>
+                                        </div>
+                                    </div> #}
+                                </div>
+                                
+                                <br>
+                                <div class="row">
+                                    <div class="col-lg-12 align-self-center">
+                                        <h5>{{ livre.titre }}
+                                            ({{ livre.auteur }})</h5>
+                                    </div>
+                                </div>
+                                <br>
+								{{ form_start(form) }}
+										{{ form_row(form.notes, { 'attr': {'rows': '13', 'cols': '50', 'style': 'display: block; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
+									<br>
+									<div class="main-border-button">
+										<div style="text-align: center;">
+											{{ form_row(form.enregistrer, { 'attr': {'style': 'background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;'} })}}
+										</div>
+									</div>
+								{{ form_end(form) }}
 							</div>
 						</div>
 						<!-- ***** prise de note Start ***** -->
@@ -91,103 +129,90 @@
 						<div class="col-lg-8">
 							<div class="row">
 								<div class="col-lg-12">
-									<div class="main-profile ">
-
-										<div class="row">
-											<div class="col-lg-12">
-												<div class="main-button">
-													<a href="#">Retour</a>
-													{# <a href="{{ path('app_detail', {livre:livreId.getId()}) }}">Retour</a> #}
-												</div>
-											</div>
-										</div>
-										<br>
-
-                    <div class="row">
-											<div class="col-lg-12 align-self-center">
-                        <h5>{{ livre.titre }} ({{ livre.auteur }})</h5>
-											</div>
-										</div>
-                    <br>
-
+									<div class="main-profile">
 										<div class="row">
 											<div class="col-lg-12">
 												{# <img src="images/profile.jpg" alt="" style="border-radius: 23px;"> #}
-                        <div id="pdfViewer">
-                          <div id="pdfZoomIn">+</div>
-                          <div id="pdfZoomOut">-</div>
-                          <div id="pdfPrev">&#10094;</div>
-                          <div id="pdfNext">&#10095;</div>
-                          <div id="pdfScrollbar">
-                              <div id="pdfScrollbarFill"></div>
-                          </div>
-                        </div>
-                        <object type="text/html" codetype="application/pdf" name="PDF" id="PDF" data='{{ asset('fichiers/' ~ livre.fichier ~ '.pdf' ) }}' width="100%" height="100%"/></object>
-                        <script src="{{ asset('pdfjs/build/pdf.js') }}"></script>
-                        <script src="{{ asset('pdfjs/web/viewer.js') }}"></script>
-                        <script>
-                          // Charger le PDF
-                          const pdfPath = '{{ asset('fichiers/' ~ livre.fichier) }}';
-                          const loadingTask = pdfjsLib.getDocument(pdfPath);
+                                                <object type="text/html" codetype="application/pdf" name="PDF" id="PDF" data='{{ asset('fichiers/' ~ livre.fichier ~ '.pdf' ) }}' width="100%" height="680%"/></object>
+											
+												{# <div id="pdfViewer">
+													<div id="pdfZoomIn">+</div>
+													<div id="pdfZoomOut">-</div>
+													<div id="pdfPrev">&#10094;</div>
+													<div id="pdfNext">&#10095;</div>
+													<div id="pdfScrollbar">
+														<div id="pdfScrollbarFill"></div>
+													</div>
+												</div>
+                                                <script src="{{ asset('pdfjs/build/pdf.js') }}"></script>
+                                                <script src="{{ asset('pdfjs/web/viewer.js') }}"></script>
+                                                <script>
+                                                    // Charger le PDF
+                                                    const pdfPath = '{{ asset('fichiers/' ~ livre.fichier) }}';
+                                                    const loadingTask = pdfjsLib.getDocument(pdfPath);
 
-                          // Afficher les pages du PDF
-                          loadingTask.promise.then(function(pdf) {
-                              // Récupérer le conteneur de la visionneuse PDF
-                              const pdfViewer = document.getElementById('pdfViewer');
+                                                    // Afficher les pages du PDF
+                                                    loadingTask.promise.then(function (pdf) { // Récupérer le conteneur de la visionneuse PDF
+                                                    const pdfViewer = document.getElementById('pdfViewer');
 
-                              // Créer la visionneuse PDF
-                              const pdfjsLibViewer = pdfjsLib.PDFViewer({
-                                  container: pdfViewer
-                              });
+                                                    // Créer la visionneuse PDF
+                                                    const pdfjsLibViewer = pdfjsLib.PDFViewer({container: pdfViewer});
 
-                              // Attacher la visionneuse PDF au document PDF
-                              pdfjsLibViewer.setDocument(pdf);
+                                                    // Attacher la visionneuse PDF au document PDF
+                                                    pdfjsLibViewer.setDocument(pdf);
 
-                              // Ajouter les boutons pour zoomer en avant et en arriere
-                              const pdfZoomIn = document.getElementById('pdfZoomIn');
-                              const pdfZoomOut = document.getElementById('pdfZoomOut');
-                              pdfZoomIn.addEventListener('click', function() {
-                                  pdfjsLibViewer.currentScale += 0.1;
-                              });
-                              pdfZoomOut.addEventListener('click', function() {
-                                  pdfjsLibViewer.currentScale -= 0.1;
-                              });
+                                                    // Ajouter les boutons pour zoomer en avant et en arriere
+                                                    const pdfZoomIn = document.getElementById('pdfZoomIn');
+                                                    const pdfZoomOut = document.getElementById('pdfZoomOut');
+                                                    pdfZoomIn.addEventListener('click', function () {
+                                                    pdfjsLibViewer.currentScale += 0.1;
+                                                    });
+                                                    pdfZoomOut.addEventListener('click', function () {
+                                                    pdfjsLibViewer.currentScale -= 0.1;
+                                                    });
 
-                              // Ajouter les boutons pour naviguer entre les pages
-                              const pdfPrev = document.getElementById('pdfPrev');
-                              const pdfNext = document.getElementById('pdfNext');
-                              pdfPrev.addEventListener('click', function() {
-                                  pdfjsLibViewer.previousPage();
-                              });
-                              pdfNext.addEventListener('click', function() {
-                                  pdfjsLibViewer.nextPage();
-                              });
+                                                    // Ajouter les boutons pour naviguer entre les pages
+                                                    const pdfPrev = document.getElementById('pdfPrev');
+                                                    const pdfNext = document.getElementById('pdfNext');
+                                                    pdfPrev.addEventListener('click', function () {
+                                                    pdfjsLibViewer.previousPage();
+                                                    });
+                                                    pdfNext.addEventListener('click', function () {
+                                                    pdfjsLibViewer.nextPage();
+                                                    });
 
-                              // Ajouter la barre de défilement
-                              const pdfScrollbar = document.getElementById('pdfScrollbar');
-                              const pdfScrollbarFill = document.getElementById('pdfScrollbarFill');
-                              pdfViewer.addEventListener('scroll', function() {
-                                  const scrollWidth = pdfViewer.scrollWidth;
-                                  const scrollLeft = pdfViewer.scrollLeft;
-                                  const clientWidth = pdfViewer.clientWidth;
-                                  const scrollPercent = (scrollLeft / (scrollWidth - clientWidth)) * 100;
-                                  pdfScrollbarFill.style.width = `${scrollPercent}%`;
-                              });
-                          });
-                        </script>
-											</div>
-										</div>
+                                                    // Ajouter la barre de défilement
+                                                    const pdfScrollbar = document.getElementById('pdfScrollbar');
+                                                    const pdfScrollbarFill = document.getElementById('pdfScrollbarFill');
+                                                    pdfViewer.addEventListener('scroll', function () {
+                                                    const scrollWidth = pdfViewer.scrollWidth;
+                                                    const scrollLeft = pdfViewer.scrollLeft;
+                                                    const clientWidth = pdfViewer.clientWidth;
+                                                    const scrollPercent = (scrollLeft / (scrollWidth - clientWidth)) * 100;
+                                                    pdfScrollbarFill.style.width = `${scrollPercent}%`;
+                                                    });
+                                                    });
+                                                </script> #}
 
-									</div>
-								</div>
-							</div>
-						</div>
-						<!-- ***** espace lecture End ***** -->
-					</div>
-          <!-- ***** Lecture End ***** -->
+										    </div>
+									    </div>
 
-				</div>
-			</div>
-		</div>
-	</div>
+								    </div>
+							    </div>
+						    </div>
+					    </div>
+					    <!-- ***** espace lecture End ***** -->
+                    </div>
+                    <!-- ***** Lecture End ***** -->
+
+			    {# </div> #}
+		    </div>
+	    </div>
+    {# </div> #}
 {% endblock %}
+
+       
+    </body>
+
+</html>
+
