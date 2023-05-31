@@ -156,17 +156,25 @@
 									<em>Commentaire</em>
 									sur le livre</h4>
 							</div>
-
 							{% for commentU in comments %}
 							<div class="item">
 								<div class="main-info header-text">
 								{% if commentU.getUtilisateur == utilisateur %}
-									<p>{{commentU.getCommentaires()}}
-									<div class="main-border-button">
-										<a href="{{ path('app_supprimer_commentaire', {id: commentU.id}) }}">Supprimer</a>
+									<div class="row">
+										<h6>{{commentU.getUtilisateur().getNom()}}</h6><br>
+										<div class="col-8">
+											<p style="word-wrap: break-word;">{{commentU.getCommentaires()}}</p>
+										</div>
+										<div class="col-4">
+											<div class="main-border-button">
+												<a href="{{ path('app_supprimer_commentaire', {id: commentU.id}) }}">Supprimer</a>
+											</div>
+										</div>
 									</div>
 								{% else %}
-									<p>{{commentU.getCommentaires()}}
+									<h6>{{commentU.getUtilisateur().getNom()}}</h6><br>
+									<p style="word-wrap: break-word;">{{commentU.getCommentaires()}}</p>
+									
 								{% endif %}
 								</div>
 							</div>

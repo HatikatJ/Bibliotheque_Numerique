@@ -86,8 +86,7 @@
 											<div class="item">
 												<div class="box">
 													<div class="detail-box">
-														<div>{{avisU.getAvis()}}
-														</div><br>
+														<p style="word-wrap: break-word;">{{ avisU.getAvis() }}</p><br>
 														<h6>{{avisU.getUtilisateur().getNom()}}</h6>
 													</div>
 												</div>
@@ -95,7 +94,13 @@
 										</div>
 									{% endfor %}
 								</div>
-								<div style="color:black;background-color:white;font-size: 25px;display:flex; justify-content:center;"> {{ knp_pagination_render(paginationAvis) }} </div>
+								<div class="pagination-container">
+									<div class="pagination">
+										{{ knp_pagination_render(paginationAvis) }}
+									</div>
+								</div>
+
+								{# <div style="color:black;background-color:white;font-size: 25px;display:flex; justify-content:center;"> {{ knp_pagination_render(paginationAvis) }} </div> #}
 							</div>
 						</div>
 					</div>

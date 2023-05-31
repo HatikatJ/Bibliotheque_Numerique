@@ -1736,3 +1736,37 @@ body {
     width: 16%;
   }
 }
+
+
+
+.pagination-container {
+  text-align: center;
+  margin-top: 20px;
+  background-color: rgb(116, 108, 108);
+}
+
+.pagination {
+  display: inline-block;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.pagination li {
+  display: inline;
+  margin-right: 5px;
+}
+
+.pagination li a {
+  text-decoration: none;
+  padding: 5px 10px;
+  background-color: rgb(255, 255, 255);
+  border: 1px solid #ccc;
+}
+
+.pagination li.active a {
+  background-color: rgb(197, 135, 181);
+  color: white;
+}
+
+ 

@@ -108,44 +108,33 @@
 									sur le site</h4>
 							</div>
 
-							
-							{# <div class="item">
-								<div class="main-info header-text"> #}
+							{% for avisU in avis %}
+							<div class="item">
+								<div class="main-info header-text">
 
-									<div class="overflow-auto" style="max-width: 1500px; max-height: 400px;">
+									{# <div class="overflow-auto" style="max-width: 1500px; max-height: 400px;"> #}
 										
 										<div class="row">
-											{% for avisU in avis %}
-											<div class="col-lg-4">
-												<span class="text-white bold h6">{{avisU.getUtilisateur().getNom()}}</span>
-											</div>
-											<div class="col-lg-4">
-												{# <p class="text-white">{{avisU.getAvis()}}</p> #}
-												<div class="" style="text-overflow: clip">
-													<p class="text-white">{{avisU.getAvis()}}</p>
+											
+											<div class="col-lg-8">
+												<div class="text-white" style="text-overflow: clip">
+													<p style="word-wrap: break-word;">{{avisU.getAvis()}}</p>
 												</div>
 											</div>
 											<div class="col-lg-4">
-												{# <div class="main-border-button">
-													<a href="#">Supprimer</a>
-												</div> #}
-												{# <div class="main-border-button"> #}
-													{# <div style="text-align: center;"> #}
-														{# <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Supprimer</button> #}
-													{# </div> #}
-												{# </div> #}
 												<div class="main-border-button">
 													<a href="{{ path('app_supprimer_avis', {id: avisU.id}) }}">Supprimer</a>
 												</div>
 											</div>
 											<hr>
-											{% endfor %}
+											
 										</div>
 										
-									</div>
+									{# </div> #}
 
-								{# </div>
-							</div> #}
+								</div>
+							</div>
+							{% endfor %}
 							
 						</div>
 					</div>

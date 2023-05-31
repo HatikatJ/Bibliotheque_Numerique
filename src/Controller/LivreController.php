@@ -203,7 +203,7 @@ class LivreController extends AbstractController
             //note sur le livre
         $note = new Note();
         $note->setUtilisateur($user);
-        $note->getLivre($livre);
+        $note->setLivre($livre);
         $noteget = $noteRepository->findNoteByLivreByUtilisateur($livre, $user);
         if($noteget != null){
             $note = $noteget;
