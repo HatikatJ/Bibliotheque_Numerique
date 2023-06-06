@@ -8,13 +8,14 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractDashboardController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Livre;//++++++
+use App\Entity\Utilisateur;//++++++
 use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;//+++
 
 
 
 class DashboardController extends AbstractDashboardController
 {
-    #[Route('/admin', name: 'admin')]
+    #[Route('/admin', name: 'app_admin')]
     public function index(): Response
     {
         // return parent::index();
@@ -23,6 +24,7 @@ class DashboardController extends AbstractDashboardController
         
         $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         return $this->redirect($adminUrlGenerator->setController(LivreCrudController::class)->generateUrl());
+        
 
         // Option 2. You can make your dashboard redirect to different pages depending on the user
         //
@@ -36,11 +38,13 @@ class DashboardController extends AbstractDashboardController
         // return $this->render('some/path/my-dashboard.html.twig');
     }
 
+
     public function configureDashboard(): Dashboard
     {
         return Dashboard::new()
             ->setTitle('App');
     }
+
 
     public function configureMenuItems(): iterable
     {
@@ -48,6 +52,7 @@ class DashboardController extends AbstractDashboardController
         // yield MenuItem::linkToCrud('The Label', 'fas fa-list', EntityClass::class);
         yield MenuItem::linktoRoute('Back to the website', 'fas fa-home', 'app_livre');
         yield MenuItem::linkToCrud('Livres', 'fa fa-book-open', Livre::class);
+        yield MenuItem::linkToCrud('Utilisateur', 'fa fa-user', Utilisateur::class);
         
         
     }

@@ -17,12 +17,12 @@
 
 {% extends 'base.html.twig' %}
 
-{% block body %}
+	{% block body %}
 
-	<div class="container">
-		<div class="row">
+		<div class="container"> <div class="row">
 			<div class="col-lg-12">
-				<div class="page-content">
+				<div
+					class="page-content">
 
 					{# <!-- ***** detail sur le livre Start ***** --> #}
 					<div class="row">
@@ -34,13 +34,13 @@
 											<form>
 												<div class="main-border-button">
 													<div style="text-align: center;">
-														{% if lu == false %} 
+														{% if lu == false %}
 															<input type="hidden" name="lu" value="true">
 															<button type="submit" style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 12px 30px; border-radius: 25px; cursor: pointer;">Marquer comme Lu ?</button>
-														 {% else %}
+														{% else %}
 															<input type="hidden" name="lu" value="false">
 															<button type="submit" style="color: #fff; background-color: #e75e8d; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;">Retirer comme Lu ?</button>
-														{% endif %} 
+														{% endif %}
 													</div>
 												</div>
 											</form>
@@ -49,20 +49,20 @@
 											<form>
 												<div class="main-border-button">
 													<div style="text-align: center;">
-														{% if enr == false %} 
+														{% if enr == false %}
 															<input type="hidden" name="enr" value="true">
 															<button type="submit" style="color: #ec6090; background-color: transparent; border: 1px solid #ec6090; padding: 12px 30px; border-radius: 25px; cursor: pointer;">Marquer comme Enregistré ?</button>
-														 {% else %}
+														{% else %}
 															<input type="hidden" name="enr" value="false">
 															<button type="submit" style="color: #fff; background-color: #e75e8d; padding: 12px 30px; border: none; border-radius: 25px; cursor: pointer;">Retirer comme Enregistré ?</button>
-														{% endif %} 
+														{% endif %}
 													</div>
 												</div>
 											</form>
 										</div>
 										<div class="col-lg-4">
 											<div class="main-border-button">
-												<a href="{{ path('app_lecture', {livre:livre.getId}) }}">Lire</a> 
+												<a href="{{ path('app_lecture', {livre:livre.getId}) }}">Lire</a>
 											</div>
 										</div>
 									</div>
@@ -80,11 +80,11 @@
 										</div>
 										<div class="col-lg-4">
 											<div class="main-button">
-												<a href="{{ path('app_login') }}">Lire</a> 
+												<a href="{{ path('app_login') }}">Lire</a>
 											</div>
 										</div>
 									</div>
-								{% endif %}	
+								{% endif %}
 
 								<br>
 								<div class="row">
@@ -109,7 +109,7 @@
 												<span>{{livre.getDatePublication() | date("d/m/Y")}}</span>
 											</li>
 											{# <li>Nombre page <span>29</span></li>
-											<li>Langue <span>29</span></li> #}
+																						<li>Langue <span>29</span></li> #}
 										</ul>
 									</div>
 								</div>
@@ -127,13 +127,13 @@
 												<div class="col-lg-12 align-self-center">
 													<div class="main-info header-text">
 														{{ form_start(form1) }}
-																{{ form_row(form1.notes, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
-															<br>
-															<div class="main-border-button">
-																<div style="text-align: center;">
-																	{{ form_row(form1.enregistrer, { 'attr': {'style': 'background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;'} })}}
-																</div>
+														{{ form_row(form1.notes, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
+														<br>
+														<div class="main-border-button">
+															<div style="text-align: center;">
+																{{ form_row(form1.enregistrer, { 'attr': {'style': 'background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;'} })}}
 															</div>
+														</div>
 														{{ form_end(form1) }}
 													</div>
 												</div>
@@ -157,27 +157,27 @@
 									sur le livre</h4>
 							</div>
 							{% for commentU in comments %}
-							<div class="item">
-								<div class="main-info header-text">
-								{% if commentU.getUtilisateur == utilisateur %}
-									<div class="row">
-										<h6>{{commentU.getUtilisateur().getNom()}}</h6><br>
-										<div class="col-8">
-											<p style="word-wrap: break-word;">{{commentU.getCommentaires()}}</p>
-										</div>
-										<div class="col-4">
-											<div class="main-border-button">
-												<a href="{{ path('app_supprimer_commentaire', {id: commentU.id}) }}">Supprimer</a>
+								<div class="item">
+									<div class="main-info header-text">
+										{% if commentU.getUtilisateur == utilisateur %}
+											<div class="row">
+												<h6>{{commentU.getUtilisateur().getNom()}}</h6><br>
+												<div class="col-8">
+													<p style="word-wrap: break-word;">{{commentU.getCommentaires()}}</p>
+												</div>
+												<div class="col-4">
+													<div class="main-border-button">
+														<a href="{{ path('app_supprimer_commentaire', {id: commentU.id}) }}">Supprimer</a>
+													</div>
+												</div>
 											</div>
-										</div>
+										{% else %}
+											<h6>{{commentU.getUtilisateur().getNom()}}</h6><br>
+											<p style="word-wrap: break-word;">{{commentU.getCommentaires()}}</p>
+
+										{% endif %}
 									</div>
-								{% else %}
-									<h6>{{commentU.getUtilisateur().getNom()}}</h6><br>
-									<p style="word-wrap: break-word;">{{commentU.getCommentaires()}}</p>
-									
-								{% endif %}
 								</div>
-							</div>
 							{% endfor %}
 						</div>
 					</div>
@@ -188,11 +188,11 @@
 						<div class="row">
 							<div class="col-lg-12 align-self-center">
 								<div class="main-info header-text">
-									
+
 									<h4>Ajouter un commentaire</h4>
 									<br>
 									{{ form_start(form) }}
-										{{ form_row(form.commentaires, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
+									{{ form_row(form.commentaires, { 'attr': {'rows': '10', 'cols': '50', 'style': 'display: block; max-width: 1000px; width: 100%; font-size: 1.2em; padding: 10px; margin-bottom: 15px;'} })}}
 									<br>
 									<div class="main-border-button">
 										<div style="text-align: center;">
@@ -204,7 +204,7 @@
 							</div>
 						</div>
 					</div>
-                    {# <!-- ***** Ajouter un commentaire start ***** --> #}
+					{# <!-- ***** Ajouter un commentaire start ***** --> #}
 				</div>
 			</div>
 		</div>

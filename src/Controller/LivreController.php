@@ -21,7 +21,6 @@ use App\Entity\Utilisateur;//+++++++++
 
 class LivreController extends AbstractController
 {
-
 ///////////////////////////////////////////////LIVRE///////////////////////////////////////////////
     #[Route('/livre', name: 'app_livre')]
     public function index(LivreRepository $livreRepository): Response
@@ -57,11 +56,12 @@ class LivreController extends AbstractController
 
 
 ////////////////////////////////////////////////DETAILS/////////////////////////////////////////////////
-    #[Route('livre/detail/{livre}', name: 'app_detail')]
+    #[Route('/livreConn/detail/{livre}', name: 'app_detail')]
     public function detail(Request $request, Livre $livre, EntityManagerInterface $entityManager): Response
     {
                 //recuperation dus user
         $user = $this->getUser();
+
         //             //status lecture
         // $lu = in_array($user,$livre->getUtilisateurlecteur()->toArray());
         // if($lu==false){
@@ -135,51 +135,7 @@ class LivreController extends AbstractController
             'form' => $form,
         ]);
     }
-
-
-    // #[Route('livre/marquer_comme_lu/{id}', name: 'app_marquer_comme_lu')]
-    // public function marquer_lu(Livre $livre): Response
-    // {
-    //      //recuperation dus user
-    //     $user = $this->getUser();
-    //     //ajouter un livre
-    //     $user->addLivrelu($livre);
-    //     $livre->addUtilisateurlecteur($user);
-    //     //sauvegarder dans la bdd
-    //     $entityManager->persist($livre);
-    //     $entityManager->persist($user);
-    //     $entityManager->flush();
-    //     $lu = in_array($user,$livre->getUtilisateurlecteur());
-    //     // return $this->render('livre/detail.html.twig', [
-    //     //     'lu' => $lu
-    //     //  ]);
-    //     return $this->redirectToRoute('app_detail',['livre'=>$livre->getLivre()->getId(), 'lu'=>$lu]);
-    // }
-    // #[Route('livre/retirer_comme_lu/{id}', name: 'app_retirer_comme_lu')]
-    // public function retirer_lu(Livre $livre): Response
-    // {
-    //      //recuperation dus user
-    //      $user = $this->getUser();
-    //     //retirer un livre
-    //     $user->removeLivrelu($livre);
-    //     $livre->removeUtilisateurlecteur($user);
-    //     //sauvegarder dans la bdd
-    //     $entityManager->persist($livre);
-    //     $entityManager->persist($user);
-    //     $entityManager->flush();
-    //     // return $this->redirectToRoute('app_detail',['livre'=>$commentaire->getLivre()->getId()]);
-    // }
-    // #[Route('livre/marquer_comme_enr/{id}', name: 'app_marquer_comme_enr')]
-    // public function marquer_enr(): Response
-    // {
-    //     if($commentaire!=null){
-    //         $commentaireRepository->remove($commentaire, true);
-    //         return $this->redirectToRoute('app_detail',['livre'=>$commentaire->getLivre()->getId()]);
-    //     }
-    // }
-
-
-    #[Route('livre/supprimer_commentaire/{id}', name: 'app_supprimer_commentaire')]
+    #[Route('/livreConn/supprimer_commentaire/{id}', name: 'app_supprimer_commentaire')]
     public function supprimer(Commentaire $commentaire, CommentaireRepository $commentaireRepository): Response
     {
         if($commentaire!=null){
@@ -192,7 +148,7 @@ class LivreController extends AbstractController
 
 
 //////////////////////////////////////////////LECTURE//////////////////////////////////////////////
-    #[Route('livre/lecture/{livre}', name: 'app_lecture')]
+    #[Route('/livreConn/lecture/{livre}', name: 'app_lecture')]
     public function lecture(Request $request, Livre $livre, NoteRepository $noteRepository, EntityManagerInterface $entityManager): Response
     // public function lecture(Livre $livre): Response
     {
@@ -225,18 +181,7 @@ class LivreController extends AbstractController
 
 
 
-
-    // #[Route('livre/prendre_note/{id}', name: 'app_prendre_note')]
-    // public function noter(Avis $avis, AvisRepository $avisRepository): Response
-    // {
-    //     if($avis!=null){
-    //         $avisRepository->remove($avis, true);
-    //         return $this->redirectToRoute('app_tb');
-    //     }
-    // }
-
-
-    #[Route('livre/enregistrer_notes', name: 'app_enregistrer_notes')]
+    #[Route('/livreConn/enregistrer_notes', name: 'app_enregistrer_notes')]
     public function enregistrer_notes(Note $note, NoteRepository $noteRepository): Response
     {
         return $this->render('livre/index.html.twig', [
@@ -246,29 +191,3 @@ class LivreController extends AbstractController
 
 
 }
-
-
-
-    // #[Route('/', name: 'app_accueil')]
-    // public function index(EntityManagerInterface $entitymanager): Response
-    // {
-    //                   //LES LIVRES LES PLUS LUS
-    //   $livres = $entitymanager->getRepository(Livre::class)->findAll();
-    //   $taille=count($livres);
-    //   for ($i = 1; $i < $taille; ++$i) {
-    //     $elem = $livres[$i];
-    //     for ($j = $i; $j > 0 && count( $livres[$j-1]->getUtilisateurLecteur()) > count($elem->getUtilisateurLecteur()); $j--)
-    //       $livres[$j] =  $livres[$j-1];
-    //     $livres[$j] = $elem;
-    //   }
-    //                   //lES AVIS DES INTERNAUTES SUR LE SITE
-    //   $avis = $entitymanager->getRepository(Avis::class)->findAll();
-
-          
-    //   return $this->render('accueil/index.html.twig', [
-    //                   //LES LIVRES LES PLUS LUS
-    //     'livres' => $livres,
-    //                   //lES AVIS DES INTERNAUTES SUR LE SITE
-    //     'avis' => $avis,
-    //   ]);
-    // } 

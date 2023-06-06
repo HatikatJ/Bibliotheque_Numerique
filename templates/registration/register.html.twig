@@ -90,6 +90,15 @@
                 {{ form_label(registrationForm.email) }}
                 {{ form_widget(registrationForm.email, { 'attr': {'class': 'form-control'} }) }}
             </div>
+
+
+
+             <div class="form-group">
+                {{ form_label(registrationForm.adressadresse) }}
+                {{ form_widget(registrationForm.adressadresse, { 'attr': {'class': 'form-control'} }) }}
+            </div>
+
+
             <div class="form-group">
                 {{ form_label(registrationForm.password.first, 'Password') }}
                 {{ form_widget(registrationForm.password.first, { 'attr': {'class': 'form-control'} }) }}

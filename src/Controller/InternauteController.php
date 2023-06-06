@@ -20,6 +20,7 @@ use App\Form\NoteFormType;//++++++++
 use App\Entity\Note;//+++++++
 use App\Repository\NoteRepository;//++++++++++++++++++++++++++
 use App\Entity\Livre;//++++++
+use App\Form\UserImageFormType;
 
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
@@ -46,11 +47,40 @@ class InternauteController extends AbstractController
             $entityManager->flush();
             return $this->redirectToRoute('app_tb');
         }
+
+        $user = $this->getUser();
+
+        $form1 = $this->createForm(UserImageFormType::class, $user);
+        $form1->handleRequest($request);
+
+        if ($form1->isSubmitted() && $form1->isValid()) {
+            $imageProfileUser = $form1->get('image')->getData();
+
+            // Vérifie si l'utilisateur a sélectionné une photo de profil
+            if ($imageProfileUser) {
+                // Gère l'upload de la photo
+                $newFilename = uniqid().'.'.$imageProfileUser->guessExtension();
+                $imageProfileUser->move(
+                    $this->getParameter('profile_picture_directory'),
+                    $newFilename
+                );
+
+                // Met à jour le chemin de la photo de profil de l'utilisateur
+                $user->setImage($newFilename);
+
+                $entityManager->persist($user);
+                $entityManager->flush();
+
+                $this->addFlash('success', 'Photo de profil mise à jour avec succès.');
+            }
+        }
         return $this->render('internaute/index.html.twig', [
             'form' => $form,
             'avis' => $user->getAvis(),
             'livreE' => $livreEnr,
-            'livreL' => $livreLu
+            'livreL' => $livreLu,
+            'imageForm' => $form1,
+            'user' => $user
         ]);
     }
     #[Route('livre/supprimer_avis/{id}', name: 'app_supprimer_avis')]
@@ -63,6 +93,47 @@ class InternauteController extends AbstractController
     }
 
 
+    // #[Route('/upload', name: 'app_upload')]
+    // public function uploadImageUser(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $user = $this->getUser();
+
+    //     $form = $this->createForm(UserImageFormType::class, $user);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $imageProfileUser = $form->get('image')->getData();
+
+    //         // Vérifie si l'utilisateur a sélectionné une photo de profil
+    //         if ($imageProfileUser) {
+    //             // Gère l'upload de la photo
+    //             $newFilename = uniqid().'.'.$imageProfileUser->guessExtension();
+    //             $imageProfileUser->move(
+    //                 $this->getParameter('profile_picture_directory'),
+    //                 $newFilename
+    //             );
+
+    //             // Met à jour le chemin de la photo de profil de l'utilisateur
+    //             $user->setImage($newFilename);
+
+    //             $entityManager = $this->getDoctrine()->getManager();
+    //             $entityManager->persist($user);
+    //             $entityManager->flush();
+
+    //             $this->addFlash('success', 'Photo de profil mise à jour avec succès.');
+    //         }
+
+    //         return $this->redirectToRoute('app_upload');
+    //     }
+    //     return $this->redirectToRoute('app_tb',[
+    //         'imageForm' => $form,
+    //         'user' => $user
+    //     ]);
+    //     return $this->render('internaute/index.html.twig', [
+    //         'imageForm' => $form,
+    //         'user' => $user
+    //     ]);
+    // }
 
 
 

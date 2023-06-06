@@ -51,6 +51,12 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Note::class)]
     private Collection $note;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $adressadresse = null;
+
     public function __construct()
     {
         $this->livrelu = new ArrayCollection();
@@ -276,6 +282,30 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
                 $note->setUtilisateur(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(?string $image): self
+    {
+        $this->image = $image;
+
+        return $this;
+    }
+
+    public function getAdressadresse(): ?string
+    {
+        return $this->adressadresse;
+    }
+
+    public function setAdressadresse(string $adressadresse): self
+    {
+        $this->adressadresse = $adressadresse;
 
         return $this;
     }

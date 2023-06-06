@@ -5,50 +5,61 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-12">
-				<div class="page-content">
+				<div
+					class="page-content">
 
 					<!-- ***** Banner Start ***** -->
 					{{ form_start(form) }}
-						<div class="col-lg-12">
-							<div class="main-profile ">
-                                <div class="most-popular">
-                                    <div class="row">
-                                        <div class="col-lg-12 align-self-center">
-                                            <div class="main-info header-text">
-                                                <h4>Mes informations</h4>
-                                                <p>Vous pouvez changer vos informations ici. N'oubliez pas d'enregistrer</p>
-                                                <ul>
-                                                    <li class="text-white bold h4"> {{ form_label(form.nom, 'Nom') }}  :  {{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}</li>
-                                                    <li class="text-white bold h4">{{ form_label(form.email, 'Email') }} : {{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}</li>   
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="most-popular">
-                                    <div class="row">
-                                        <div class="col-lg-12 align-self-center">
-                                            <div class="main-info header-text">
-                                                <h4>Changement de mot de passe</h4>
-                                                <p>Vous pouvez changer votre mot de passe ici. N'oubliez pas d'enregistrer</p>  
-                                                    <ul>
-                                                        <li class="text-white bold h4">{{ form_label(form.password.first, 'Nouveau mot de passe') }}  : {{ form_widget(form.password.first, { 'attr': {'class': 'form-control'} }) }} </li>
-                                                        <li class="text-white bold h4">{{ form_label(form.password.second, 'Confirmer mot de passe') }} : {{ form_widget(form.password.second, { 'attr': {'class': 'form-control'} }) }}</li>
-                                                    </ul>
-                                                    {# <div class="main-border-button">
-                                                        <a href="#">Effectuer le changement</a>
-                                                    </div> #}
-                                                    <div style="text-align: center;">
-                                                        <button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Enregistrer</button>
-                                                    </div>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+					<div class="col-lg-12">
+						<div class="main-profile ">
+							<div class="most-popular">
+								<div class="row">
+									<div class="col-lg-12 align-self-center">
+										<div class="main-info header-text">
+											<h4>Mes informations</h4>
+											<p>Vous pouvez changer vos informations ici. N'oubliez pas d'enregistrer</p>
+											<ul>
+												<li class="text-white bold h4">
+													{{ form_label(form.nom, 'Nom') }}
+													:
+													{{ form_widget(form.nom, { 'attr': {'class': 'form-control'} }) }}</li>
+												<li class="text-white bold h4">{{ form_label(form.email, 'Email') }}
+													:
+													{{ form_widget(form.email, { 'attr': {'class': 'form-control'} }) }}</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="most-popular">
+								<div class="row">
+									<div class="col-lg-12 align-self-center">
+										<div class="main-info header-text">
+											<h4>Changement de mot de passe</h4>
+											<p>Vous pouvez changer votre mot de passe ici. N'oubliez pas d'enregistrer</p>
+											<ul>
+												<li class="text-white bold h4">{{ form_label(form.password.first, 'Nouveau mot de passe') }}
+													:
+													{{ form_widget(form.password.first, { 'attr': {'class': 'form-control'} }) }}
+												</li>
+												<li class="text-white bold h4">{{ form_label(form.password.second, 'Confirmer mot de passe') }}
+													:
+													{{ form_widget(form.password.second, { 'attr': {'class': 'form-control'} }) }}</li>
+											</ul>
+											{# <div class="main-border-button">
+											                                                        <a href="#">Effectuer le changement</a>
+											                                                    </div> #}
+											<div style="text-align: center;">
+												<button type="submit" style="background-color: #4CAF50; color: white; padding: 10px 20px; border: none; border-radius: 105px; cursor: pointer;">Enregistrer</button>
+											</div>
+
+										</div>
+									</div>
+								</div>
 							</div>
 						</div>
-					{{ form_end(form) }} 
+					</div>
+					{{ form_end(form) }}
 					<!-- ***** Banner End ***** -->
 
 				</div>

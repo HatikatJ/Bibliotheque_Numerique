@@ -26,17 +26,17 @@ class AvisRepository extends ServiceEntityRepository
     }
 
 
-    //ajouter
-    public function getCommentPaginator(Conference $conference, int $offset): Paginator
-    {
-        $query = $this->createQueryBuilder('a')
-            ->orderBy('c.createdAt', 'DESC')
-            ->setMaxResults(self::PAGINATOR_PER_PAGE)
-            ->setFirstResult($offset)
-            ->getQuery()
-        ;
-        return new Paginator($query);
-    }
+    // //ajouter
+    // public function getCommentPaginator(Conference $conference, int $offset): Paginator
+    // {
+    //     $query = $this->createQueryBuilder('a')
+    //         ->orderBy('c.createdAt', 'DESC')
+    //         ->setMaxResults(self::PAGINATOR_PER_PAGE)
+    //         ->setFirstResult($offset)
+    //         ->getQuery()
+    //     ;
+    //     return new Paginator($query);
+    // }
 
 
     public function save(Avis $entity, bool $flush = false): void

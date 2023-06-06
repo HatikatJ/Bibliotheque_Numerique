@@ -1,0 +1,53 @@
+{# {# {% extends 'base.html.twig' %} #}
+
+
+<style>
+    .error-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+    }
+
+    .error-image {
+    width: 1000px;
+    height: auto;
+    margin-bottom: 20px;
+    }
+
+    .error-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    }
+
+    .error-message {
+    font-size: 18px;
+    margin-bottom: 10px;
+    }
+
+    .error-link {
+    font-size: 16px;
+    color: #000;
+    text-decoration: none;
+    transition: color 0.3s ease;
+    }
+
+    .error-link:hover {
+    color: #666;
+    }
+</style>
+
+
+
+{% block body %}
+    <div class="error-container">
+        <img src="{{ asset('webfonts/404.png') }}" alt="Image d'erreur" class="error-image">
+        <h1 class="error-title">Oops, une erreur s'est produite!</h1>
+        <p class="error-message">Désolé, la page que vous recherchez est introuvable.</p>
+        <p class="error-help">Si vous pensez qu'il s'agit d'une erreur, veuillez contacter l'administrateur du site.</p>
+        {# <a href="{{ path('home') }}" class="error-link">Retour à l'accueil</a> #}
+    </div>
+{% endblock %}
